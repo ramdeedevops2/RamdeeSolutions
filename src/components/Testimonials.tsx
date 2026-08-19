@@ -1,78 +1,84 @@
-import { Star } from 'lucide-react';
+import { useState } from 'react';
+import { Index } from './Ui';
 
-const testimonials = [
+const quotes = [
   {
-    name: 'Sarah Johnson',
-    role: 'CEO, TechStart Inc',
-    content: 'RamdeeSolution transformed our digital infrastructure. Their expertise in cloud solutions helped us scale efficiently and securely.',
-    rating: 5,
-    avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200'
+    n: '01',
+    content:
+      'We had been struggling with our servers for two years only. Ramdee shifted everything to cloud without any drama — not even one day of downtime. Very much satisfied.',
+    name: 'Rajesh Malhotra',
+    role: 'Director, Sharma Textiles',
   },
   {
-    name: 'Michael Chen',
-    role: 'CTO, DataFlow Systems',
-    content: 'Outstanding web development services! The team delivered a high-performance application that exceeded our expectations.',
-    rating: 5,
-    avatar: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200'
+    n: '02',
+    content:
+      'Honestly, we were expecting the usual delays. But they delivered before time itself, and the site is running very smooth. Full paisa vasool.',
+    name: 'Priya Nair',
+    role: 'Founder, Kirana Connect',
   },
   {
-    name: 'Emily Rodriguez',
-    role: 'Founder, InnovateLab',
-    content: 'Their AI automation solutions revolutionized our workflow. Professional, reliable, and always delivering on time.',
-    rating: 5,
-    avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=200'
-  }
+    n: '03',
+    content:
+      'Their automation work saved my team almost 20 hours every week. Whatever we ask, they explain properly in simple language — no fancy tech jargon.',
+    name: 'Arjun Sethi',
+    role: 'CTO, Vertex Logistics',
+  },
 ];
 
 export default function Testimonials() {
-  return (
-    <section className="py-24 bg-gradient-to-br from-purple-50/30 to-orange-50/20">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4">
-            <span className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
-              Testimonials
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it - hear from our satisfied clients
-          </p>
-        </div>
+  const [i, setI] = useState(0);
+  const q = quotes[i];
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+  return (
+    <section id="voices" className="py-[clamp(90px,14vh,190px)]">
+      <div className="shell">
+        <div className="grid12 items-start gap-y-10">
+          <div className="col-span-4 md:col-span-3">
+            <Index n="04" label="Clients" />
+          </div>
+
+          {/* the quote — large, editorial, swapped by index */}
+          <div className="col-span-4 md:col-span-9">
+            <blockquote
+              key={q.n}
+              className="m-0 font-display text-[clamp(26px,4.6vw,72px)] leading-[1.06] tracking-[-.032em]"
+              style={{ animation: 'quoteIn .9s cubic-bezier(.16,1,.3,1) forwards' }}
             >
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-orange-500 text-orange-500" />
+              <span className="text-accent">“</span>
+              {q.content}
+            </blockquote>
+
+            <div className="rule mt-[clamp(32px,5vh,64px)] flex flex-wrap items-center justify-between gap-6 pt-6">
+              <div
+                key={`${q.n}-by`}
+                style={{ animation: 'quoteIn .7s cubic-bezier(.16,1,.3,1) forwards' }}
+              >
+                <div className="text-[15px] font-medium tracking-[-.02em]">{q.name}</div>
+                <div className="meta mt-1.5">{q.role}</div>
+              </div>
+
+              {/* numeric selector, not dots */}
+              <div className="flex items-center gap-6">
+                {quotes.map((t, idx) => (
+                  <button
+                    key={t.n}
+                    onClick={() => setI(idx)}
+                    aria-label={`Read testimonial ${t.n}`}
+                    className={`meta relative bg-transparent transition-colors duration-500 ${
+                      idx === i ? 'text-accent' : 'text-paper/40 hover:text-paper'
+                    }`}
+                  >
+                    {t.n}
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-accent transition-transform duration-700 ease-swiss ${
+                        idx === i ? 'scale-x-100' : 'scale-x-0'
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
-
-              <p className="text-gray-700 leading-relaxed mb-6 italic">
-                "{testimonial.content}"
-              </p>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-purple-400 to-orange-400">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-gray-600">{testimonial.role}</div>
-                </div>
-              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

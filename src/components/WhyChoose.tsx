@@ -1,83 +1,100 @@
-import { Award, Lock, Zap, Headphones as HeadphonesIcon } from 'lucide-react';
+import { useState } from 'react';
+import { Index, Kinetic } from './Ui';
 
-const features = [
+const reasons = [
   {
-    icon: Award,
-    title: 'Experienced Developers',
-    description: 'Our team of certified professionals brings years of expertise in cutting-edge technologies.',
-    image: 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=400'
+    n: '01',
+    title: 'Experienced developers',
+    body: 'Certified professionals with years of production experience across the stacks we recommend. The people in the pitch are the people on the build.',
   },
   {
-    icon: Lock,
-    title: 'Secure Infrastructure',
-    description: 'Enterprise-grade security measures to protect your data and applications at all times.',
-    image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=400'
+    n: '02',
+    title: 'Secure infrastructure',
+    body: 'Enterprise-grade security applied from the first commit — encrypted data paths, least-privilege access and audited dependencies as standard, not as an upsell.',
   },
   {
-    icon: Zap,
-    title: 'Scalable Technology',
-    description: 'Build solutions that grow with your business, from startup to enterprise scale.',
-    image: 'https://images.pexels.com/photos/3143774/pexels-photo-3143774.jpeg?auto=compress&cs=tinysrgb&w=400'
+    n: '03',
+    title: 'Scalable technology',
+    body: 'Architecture that carries you from startup traffic to enterprise scale without a rewrite. We build for the second year, not just the launch.',
   },
   {
-    icon: HeadphonesIcon,
-    title: '24/7 Support',
-    description: 'Round-the-clock technical support to keep your systems running smoothly.',
-    image: 'https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=400'
-  }
+    n: '04',
+    title: '24/7 support',
+    body: 'Round-the-clock technical cover with a response window under two hours. Systems fail at inconvenient times; someone is always awake for it.',
+  },
 ];
 
 export default function WhyChoose() {
+  const [open, setOpen] = useState('01');
+
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-purple-50/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-block mb-4">
-            <span className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
-              Why Choose Us
-            </span>
+    <section id="approach" className="py-[clamp(90px,14vh,190px)]">
+      <div className="shell">
+        {/* items-start: let each column size to its own content instead of
+            stretching to the tallest, which left dead space under the accordion */}
+        <div className="grid12 items-start gap-y-[clamp(40px,7vh,80px)]">
+          {/* statement + studio image */}
+          <div className="col-span-4 md:col-span-5">
+            <Index n="03" label="The studio" />
+            <h2 className="display mt-6 text-[clamp(36px,6.2vw,104px)]">
+              <Kinetic text="Built to be" />
+              <Kinetic text="handed over" base={0.12} className="font-display italic text-accent" />
+            </h2>
+            <p className="body-lg rise mt-8 max-w-[40ch] text-paper/70">
+              Every engagement is documented, tested and transferable. You should never be hostage to
+              the team that built your system — including us.
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Choose RamdeeSolution
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Partner with a team that's committed to your success
-          </p>
-        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-            >
-              <div className="relative h-40 overflow-hidden bg-gray-100">
-                <img
-                  src={feature.image}
-                  alt={feature.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 to-transparent" />
-              </div>
+          {/* accordion */}
+          <div className="col-span-4 md:col-span-6 md:col-start-7">
+            <div className="rule">
+              {reasons.map((r) => {
+                const on = open === r.n;
+                return (
+                  <div key={r.n} className="border-b border-paper/15">
+                    <button
+                      onClick={() => setOpen(on ? '' : r.n)}
+                      aria-expanded={on}
+                      className="group flex w-full items-center gap-5 bg-transparent py-[clamp(18px,2.6vh,30px)] text-left"
+                    >
+                      <span className={`meta transition-colors duration-500 ${on ? 'text-accent' : ''}`}>
+                        {r.n}
+                      </span>
+                      <span
+                        className={`flex-1 font-display text-[clamp(21px,2.8vw,40px)] leading-[1.05] tracking-[-.03em] transition-all duration-[700ms] ease-swiss group-hover:translate-x-2 ${
+                          on ? 'text-accent' : 'text-paper'
+                        }`}
+                      >
+                        {r.title}
+                      </span>
+                      <span
+                        aria-hidden
+                        className={`relative h-3 w-3 flex-none transition-transform duration-[700ms] ease-swiss ${
+                          on ? 'rotate-45' : ''
+                        }`}
+                      >
+                        <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current" />
+                        <span
+                          className={`absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-current transition-opacity duration-500 ${
+                            on ? 'opacity-0' : 'opacity-100'
+                          }`}
+                        />
+                      </span>
+                    </button>
 
-              <div className="p-6">
-                <div className="relative inline-block mb-4">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-orange-500 rounded-xl blur-lg opacity-20" />
-                  <div className="relative w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                    <feature.icon className="w-6 h-6 text-purple-600" />
+                    <div className={`acc ${on ? 'open' : ''}`}>
+                      <div>
+                        <p className="m-0 max-w-[52ch] pb-7 pl-[calc(1.6rem+8px)] text-[14px] leading-[1.6] text-paper/60">
+                          {r.body}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <h3 className="text-lg font-bold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
-
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

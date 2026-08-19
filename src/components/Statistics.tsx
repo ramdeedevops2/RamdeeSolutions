@@ -1,92 +1,33 @@
-import { useEffect, useState, useRef } from 'react';
+import { useCountUp } from '../hooks/useMotion';
 
 const stats = [
-  { label: 'Projects Completed', value: 300, suffix: '+' },
-  { label: 'Happy Clients', value: 150, suffix: '+' },
-  { label: 'Years Experience', value: 8, suffix: '+' },
-  { label: 'Team Members', value: 25, suffix: '+' }
+  { label: 'Projects completed', value: 300, suffix: '+' },
+  { label: 'Happy clients', value: 150, suffix: '+' },
+  { label: 'Years experience', value: 8, suffix: '' },
+  { label: 'Team members', value: 25, suffix: '+' },
 ];
 
-function Counter({ end, suffix }: { end: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    let startTime: number;
-    const duration = 2000;
-
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-
-      setCount(Math.floor(progress * end));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [isVisible, end]);
-
+function Stat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const { ref, value: current } = useCountUp(value);
   return (
-    <div ref={ref} className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
-      {count}{suffix}
+    <div className="col-span-2 border-t border-paper/15 pt-5 md:col-span-3">
+      <div className="font-display text-[clamp(44px,7vw,116px)] leading-[.9] tracking-[-.04em]">
+        <span ref={ref}>{current}</span>
+        <span className="text-accent">{suffix}</span>
+      </div>
+      <div className="meta mt-4">{label}</div>
     </div>
   );
 }
 
 export default function Statistics() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-gradient-to-br from-purple-600 to-orange-500 rounded-3xl p-12 md:p-16 shadow-2xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Our Impact in Numbers
-            </h2>
-            <p className="text-purple-100 text-lg">
-              Delivering excellence across all metrics
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
-              >
-                <Counter end={stat.value} suffix={stat.suffix} />
-                <div className="text-white/90 mt-3 font-medium">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
+    <section className="py-[clamp(70px,10vh,140px)]">
+      <div className="shell">
+        <div className="grid12 gap-y-10">
+          {stats.map((s) => (
+            <Stat key={s.label} {...s} />
+          ))}
         </div>
       </div>
     </section>

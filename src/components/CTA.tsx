@@ -1,53 +1,114 @@
-import { ArrowRight, Mail, Phone } from 'lucide-react';
+import { Kinetic, Wordmark, Magnetic } from './Ui';
+
+const marqueeItems = ['Start a project', 'Start a project', 'Start a project', 'Start a project'];
+
+const footerCols = [
+  {
+    head: 'Services',
+    links: ['Web Development', 'Cloud Solutions', 'AI Automation', 'Cybersecurity'],
+    href: '#services',
+  },
+  { head: 'Studio', links: ['Approach', 'Work', 'Clients', 'Contact'], href: '#approach' },
+];
 
 export default function CTA() {
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-purple-50/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="relative bg-gradient-to-br from-purple-600 via-purple-700 to-orange-600 rounded-3xl overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMC0xMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
-
-          <div className="relative px-8 py-16 md:px-16 md:py-20">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                Ready To Build Your Digital Future?
+    <>
+      {/* ---------- contact ---------- */}
+      <section id="contact" className="relative overflow-hidden pt-[clamp(90px,14vh,190px)]">
+        <div className="shell">
+          <div className="grid12 items-end gap-y-10 pb-[clamp(50px,8vh,100px)]">
+            <div className="col-span-4 md:col-span-8">
+              <h2 className="display m-0 text-[clamp(40px,9vw,150px)]">
+                <Kinetic text="Let's build" />
+                <Kinetic text="something" base={0.12} className="font-display italic text-accent" />
               </h2>
-              <p className="text-xl text-purple-100 mb-8">
-                Let's transform your ideas into powerful digital solutions. Our team is ready to help you succeed.
+            </div>
+            <div className="col-span-4 md:col-span-3 md:col-start-10">
+              <p className="body-lg rise m-0 text-paper/70">
+                Tell us where you are stuck. We will tell you what it takes.
               </p>
-
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <button className="group px-8 py-4 bg-white text-purple-700 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-2">
-                  Start Your Project
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold border-2 border-white/30 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1">
-                  Schedule a Call
-                </button>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-8 text-white/90">
-                <div className="flex items-center gap-2">
-                  <Mail className="w-5 h-5" />
-                  <span>contact@ramdee.com</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-5 h-5" />
-                  <span>+1 (555) 123-4567</span>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <footer className="mt-16 text-center">
-        <div className="max-w-7xl mx-auto px-6 py-8 border-t border-gray-200">
-          <p className="text-gray-600">
-            © 2024 RamdeeSolution. All rights reserved.
-          </p>
+          <div className="rule" />
+        </div>
+
+        {/* giant marquee CTA */}
+        <a href="mailto:contact@ramdee.com" className="mt-[clamp(50px,8vh,110px)] block no-underline">
+          <div
+            className="mq-mask flex overflow-hidden py-6"
+            style={{ '--gap': '48px', gap: 'var(--gap)' } as React.CSSProperties}
+          >
+            {[0, 1].map((t) => (
+              <div
+                key={t}
+                className="flex min-w-full flex-none animate-marquee items-center"
+                style={{ gap: 'var(--gap)' }}
+              >
+                {marqueeItems.map((m, i) => (
+                  <span key={i} className="flex items-center" style={{ gap: 'var(--gap)' }}>
+                    <span className="whitespace-nowrap font-display text-[clamp(46px,9vw,150px)] leading-none tracking-[-.04em] text-paper transition-colors duration-500 hover:text-accent">
+                      {m}
+                    </span>
+                    <span className="text-[clamp(20px,3vw,50px)] text-accent">✳</span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </a>
+      </section>
+
+      {/* ---------- footer ---------- */}
+      <footer className="pb-8 pt-[clamp(50px,8vh,100px)]">
+        <div className="shell">
+          <div className="rule grid12 gap-y-10 pt-8">
+            <div className="col-span-4 md:col-span-4">
+              <Wordmark />
+              <p className="mt-5 max-w-[30ch] text-[13.4px] leading-[1.6] text-paper/50">
+                An engineering studio for web platforms, cloud infrastructure, AI automation and
+                security.
+              </p>
+            </div>
+
+            {footerCols.map((col) => (
+              <div key={col.head} className="col-span-2 md:col-span-2">
+                <div className="meta mb-4">{col.head}</div>
+                {col.links.map((l) => (
+                  <a
+                    key={l}
+                    href={col.href}
+                    className="ul mb-2 block w-fit text-[13.4px] text-paper/60 no-underline transition-colors duration-500 hover:text-paper"
+                  >
+                    {l}
+                  </a>
+                ))}
+              </div>
+            ))}
+
+            <div className="col-span-4 md:col-span-2 md:col-start-11 md:text-right">
+              <div className="meta mb-4">Elsewhere</div>
+              {['LinkedIn', 'Instagram', 'GitHub'].map((s) => (
+                <Magnetic
+                  key={s}
+                  href="#contact"
+                  className="ul mb-2 block w-fit text-[13.4px] text-paper/60 no-underline transition-colors duration-500 hover:text-paper md:ml-auto"
+                >
+                  {s}
+                </Magnetic>
+              ))}
+            </div>
+          </div>
+
+          <div className="rule mt-[clamp(40px,7vh,80px)] flex flex-wrap items-center justify-between gap-4 pt-5">
+            <span className="meta">© {new Date().getFullYear()} Ramdee Solutions</span>
+            <a href="#top" className="ul meta no-underline transition-colors hover:text-accent">
+              Back to top ↑
+            </a>
+          </div>
         </div>
       </footer>
-    </section>
+    </>
   );
 }
