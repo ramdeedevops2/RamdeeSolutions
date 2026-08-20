@@ -1,4 +1,5 @@
 import { Kinetic, Wordmark, Magnetic } from './Ui';
+import { jumpToTop } from '../hooks/useJumpTop';
 
 const marqueeItems = ['Start a project', 'Start a project', 'Start a project', 'Start a project'];
 
@@ -25,7 +26,7 @@ export default function CTA() {
               </h2>
             </div>
             <div className="col-span-4 md:col-span-3 md:col-start-10">
-              <p className="body-lg rise m-0 text-paper/70">
+              <p className="body-lg rise rise-r m-0 text-paper/70">
                 Tell us where you are stuck. We will tell you what it takes.
               </p>
             </div>
@@ -103,7 +104,11 @@ export default function CTA() {
 
           <div className="rule mt-[clamp(40px,7vh,80px)] flex flex-wrap items-center justify-between gap-4 pt-5">
             <span className="meta">© {new Date().getFullYear()} Ramdee Solutions</span>
-            <a href="#top" className="ul meta no-underline transition-colors hover:text-accent">
+            <a
+              href="#top"
+              onClick={jumpToTop}
+              className="ul meta no-underline transition-colors hover:text-accent"
+            >
               Back to top ↑
             </a>
           </div>

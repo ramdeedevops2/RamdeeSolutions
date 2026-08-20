@@ -97,7 +97,7 @@ export default function Services() {
             </h2>
           </div>
           <div className="col-span-4 md:col-span-4 md:col-start-9">
-            <p className="body-lg rise m-0 text-paper/70">
+            <p className="body-lg rise rise-r m-0 text-paper/70">
               No handoffs between agencies. Strategy, engineering and security sit in the same room,
               on the same schedule.
             </p>
@@ -123,7 +123,10 @@ export default function Services() {
                   aria-hidden
                 />
 
-                <div className="rise grid12 relative cursor-pointer items-baseline py-[clamp(18px,2.6vh,34px)]">
+                <div
+                  className="rise grid12 relative cursor-pointer items-baseline py-[clamp(18px,2.6vh,34px)]"
+                  style={{ transitionDelay: `${services.indexOf(s) * 0.06}s` }}
+                >
                   <span
                     className={`meta col-span-1 transition-colors duration-500 ${
                       on ? 'text-accent' : ''

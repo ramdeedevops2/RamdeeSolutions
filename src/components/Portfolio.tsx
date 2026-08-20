@@ -51,7 +51,7 @@ export default function Portfolio() {
             </h2>
           </div>
           <div className="col-span-4 md:col-span-3 md:col-start-10">
-            <p className="body-lg rise m-0 text-paper/70">
+            <p className="body-lg rise rise-r m-0 text-paper/70">
               Three of the products we designed, built and continue to maintain.
             </p>
             <span className="meta mt-6 hidden items-center gap-2 lg:flex">
@@ -92,7 +92,7 @@ export default function Portfolio() {
                       src={p.logo}
                       alt={`${p.title} logo`}
                       loading="lazy"
-                      className="max-h-full max-w-full object-contain brightness-0 invert transition-transform duration-[900ms] ease-swiss group-hover:scale-[1.04]"
+                      className="logo-plate max-h-full max-w-full object-contain transition-transform duration-[900ms] ease-swiss group-hover:scale-[1.04]"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement
@@ -116,7 +116,7 @@ export default function Portfolio() {
                       alt=""
                       aria-hidden
                       loading="lazy"
-                      className="max-h-full max-w-full object-contain brightness-0"
+                      className="logo-plate-over max-h-full max-w-full object-contain"
                     />
                   </span>
 

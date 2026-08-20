@@ -97,27 +97,63 @@ export function useReveal() {
             io.unobserve(e.target);
           }
         }),
-      { threshold: 0.1, rootMargin: '0px 0px -6% 0px' }
+      // threshold 0 so tall blocks fire as soon as any part enters; the
+      // negative bottom margin just delays the trigger slightly past the fold
+      { threshold: 0, rootMargin: '0px 0px -5% 0px' }
     );
 
+    /* Direction variants. Assigned deterministically per element index so
+       the mix looks scattered but never re-shuffles between renders. */
+    const variants = [
+      '',
+      'rise-r',
+      'rise-deep',
+      'rise-deep-r',
+      'rise-tilt',
+      'rise-zoom',
+      'rise-r',
+      'rise-tilt-up',
+      'rise-deep',
+      'rise-tilt',
+      'rise-deep-r',
+      'rise-zoom',
+    ];
+    let n = 0;
+
+    /** observe anything not yet tracked; never mark an element done here */
     const scan = () => {
       document.querySelectorAll<HTMLElement>('.rise, .wipe').forEach((el) => {
-        if (seen.has(el) || el.classList.contains('in')) return;
+        if (el.classList.contains('in') || seen.has(el)) return;
         seen.add(el);
+
+        // only assign if the markup has not already picked a direction
+        const hasVariant = /rise-(r|deep|deep-r|tilt|tilt-up|zoom)\b/.test(el.className);
+        if (!hasVariant) {
+          const v = variants[n % variants.length];
+          if (v) el.classList.add(v);
+        }
+        n += 1;
+
         io.observe(el);
-        // already within the viewport at scan time — reveal immediately
-        const b = el.getBoundingClientRect();
-        if (b.top < window.innerHeight && b.bottom > 0) el.classList.add('in');
       });
     };
 
     scan();
+    // run again after paint — on mount the nodes may have zero geometry,
+    // which would make the observer treat them as out of view
+    const raf = requestAnimationFrame(() => {
+      scan();
+      requestAnimationFrame(scan);
+    });
+
+    // watch for nodes added later (childList) — class changes are irrelevant here
     const mo = new MutationObserver(scan);
     mo.observe(document.body, { childList: true, subtree: true });
     window.addEventListener('resize', scan, { passive: true });
     window.addEventListener('load', scan);
 
     return () => {
+      cancelAnimationFrame(raf);
       io.disconnect();
       mo.disconnect();
       window.removeEventListener('resize', scan);

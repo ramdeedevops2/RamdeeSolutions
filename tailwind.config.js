@@ -4,19 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Swiss editorial: paper, ink, one accent */
-        ink: '#0A0A0A',
-        paper: '#F2F0EB',
+        /* Swiss editorial: paper, ink, one accent.
+           Driven by CSS variables so the theme can invert at runtime.
+           <alpha-value> keeps Tailwind's /opacity modifiers working. */
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        paper: 'rgb(var(--c-paper) / <alpha-value>)',
         grey: {
-          1: '#8A8A85',
-          2: '#5C5C58',
-          3: '#2A2A28',
+          1: 'rgb(var(--c-grey-1) / <alpha-value>)',
+          2: 'rgb(var(--c-grey-2) / <alpha-value>)',
+          3: 'rgb(var(--c-grey-3) / <alpha-value>)',
         },
         /* sampled from the Ramdee Solutions mark */
-        accent: '#F65F5F',
+        accent: 'rgb(var(--c-accent) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+        /* brand wordmark — falls back to the display serif until the
+           licensed Nevera files are added to /public/fonts */
+        brand: ['Nevera', '"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
         sans: ['"Neue Haas Grotesk"', '"Inter Tight"', 'Inter', '-apple-system', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },

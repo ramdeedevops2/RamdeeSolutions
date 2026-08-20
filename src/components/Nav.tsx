@@ -1,4 +1,4 @@
-import { Wordmark } from './Ui';
+import { Wordmark, ThemeToggle } from './Ui';
 import { useScrolled, useClock } from '../hooks/useMotion';
 
 const links = [
@@ -37,11 +37,12 @@ export default function Nav() {
               ))}
             </div>
 
-            <div className="col-span-2 hidden justify-end md:col-span-3 md:flex">
-              <span className="meta flex items-center gap-2 text-paper/60">
+            <div className="col-span-2 flex items-center justify-end gap-5 md:col-span-3">
+              <span className="meta hidden items-center gap-2 text-paper/60 md:flex">
                 <span className="h-1 w-1 animate-blink rounded-full bg-accent" />
                 CHD {time}
               </span>
+              <ThemeToggle />
             </div>
           </div>
         </div>
