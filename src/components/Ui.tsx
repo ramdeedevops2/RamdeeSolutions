@@ -10,16 +10,11 @@ export function Wordmark() {
   const ref = useRef<HTMLSpanElement | null>(null);
   const raf = useRef<number | null>(null);
 
-  /* Scramble: each character resolves at its own moment, and the resolve
-     point sweeps forward then back, so the word keeps churning rather than
-     settling left-to-right once. */
   const scramble = () => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // letters only: symbol glyphs have very different widths in Nevera and
-    // would make the wordmark jitter as it churns
     const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const chars = Array.from(label);
     const DURATION = 1100;
@@ -27,14 +22,12 @@ export function Wordmark() {
 
     const tick = (now: number) => {
       const t = Math.min((now - start) / DURATION, 1);
-      // sweep the resolve front forward (0 -> 1) then back (1 -> 0)
       const front = t < 0.5 ? t * 2 : (1 - t) * 2;
 
       el.textContent = chars
         .map((c, i) => {
           if (c === ' ') return ' ';
           const at = i / chars.length;
-          // resolved when the front has passed this character
           const settled = t >= 0.999 || at < front - 0.12;
           if (settled) return c;
           return glyphs[Math.floor(Math.random() * glyphs.length)];
@@ -52,14 +45,11 @@ export function Wordmark() {
     raf.current = requestAnimationFrame(tick);
   };
 
-  /* Fire on its own at irregular intervals, so the wordmark keeps churning
-     without needing to be hovered. Pauses while the tab is hidden. */
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let timer: number;
     const schedule = () => {
-      // 3.5–8s apart, so it never feels metronomic
       const wait = 3500 + Math.random() * 4500;
       timer = window.setTimeout(() => {
         if (!document.hidden) scramble();
@@ -78,8 +68,6 @@ export function Wordmark() {
     <a
       href="#top"
       onClick={jumpToTop}
-      onMouseEnter={scramble}
-      onFocus={scramble}
       className="group flex items-center gap-2.5 text-paper no-underline"
     >
       <img
@@ -88,10 +76,8 @@ export function Wordmark() {
         aria-hidden
         width={28}
         height={28}
-        className="h-7 w-7 flex-none object-contain transition-transform duration-700 ease-swiss group-hover:rotate-90"
+        className="h-7 w-7 flex-none object-contain"
       />
-      {/* Nevera is caps-only and runs wide, so it sits smaller than a
-          lowercase face would at the same optical weight */}
       <span
         ref={ref}
         className="whitespace-pre font-brand text-[15px] leading-none tracking-[.06em]"
