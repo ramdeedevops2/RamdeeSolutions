@@ -1,5 +1,6 @@
 import { Kinetic, Wordmark, Magnetic } from './Ui';
 import { jumpToTop } from '../hooks/useJumpTop';
+import ContactForm from './ContactForm';
 
 const marqueeItems = ['Start a project', 'Start a project', 'Start a project', 'Start a project'];
 
@@ -9,26 +10,38 @@ const footerCols = [
     links: ['Web Development', 'Cloud Solutions', 'AI Automation', 'Cybersecurity'],
     href: '#services',
   },
-  { head: 'Studio', links: ['Approach', 'Work', 'Clients', 'Contact'], href: '#approach' },
+  { head: 'Studio', links: ['About', 'Approach', 'Work', 'Clients', 'Contact'], href: '#approach' },
 ];
+
+/* footer links that point somewhere other than their column's default */
+const linkHref: Record<string, string> = {
+  About: '#about',
+  Work: '#work',
+  Clients: '#voices',
+  Contact: '#contact',
+};
 
 export default function CTA() {
   return (
     <>
       {/* ---------- contact ---------- */}
-      <section id="contact" className="relative overflow-hidden pt-[clamp(90px,14vh,190px)]">
+      <section id="contact" className="relative overflow-x-clip pt-[clamp(90px,14vh,190px)]">
         <div className="shell">
-          <div className="grid12 items-end gap-y-10 pb-[clamp(50px,8vh,100px)]">
-            <div className="col-span-4 md:col-span-8">
-              <h2 className="display m-0 text-[clamp(40px,9vw,150px)]">
+          {/* heading and form side by side; the heading column stays pinned
+              while the (taller) form scrolls past it on desktop */}
+          <div className="grid12 items-start gap-y-14 pb-[clamp(60px,10vh,130px)]">
+            <div className="col-span-4 md:sticky md:top-28 md:col-span-5">
+              <h2 className="display m-0 text-[clamp(40px,6.4vw,112px)]">
                 <Kinetic text="Let's build" />
                 <Kinetic text="something" base={0.12} className="font-display italic text-accent" />
               </h2>
-            </div>
-            <div className="col-span-4 md:col-span-3 md:col-start-10">
-              <p className="body-lg rise rise-r m-0 text-paper/70">
+              <p className="body-lg rise m-0 mt-8 max-w-[32ch] text-paper/70">
                 Tell us where you are stuck. We will tell you what it takes.
               </p>
+            </div>
+
+            <div className="col-span-4 md:col-span-6 md:col-start-7">
+              <ContactForm />
             </div>
           </div>
 
@@ -36,7 +49,7 @@ export default function CTA() {
         </div>
 
         {/* giant marquee CTA */}
-        <a href="mailto:contact@ramdee.com" className="mt-[clamp(50px,8vh,110px)] block no-underline">
+        <a href="#enquiry" className="mt-[clamp(50px,8vh,110px)] block no-underline">
           <div
             className="mq-mask flex overflow-hidden py-6"
             style={{ '--gap': '48px', gap: 'var(--gap)' } as React.CSSProperties}
@@ -79,7 +92,7 @@ export default function CTA() {
                 {col.links.map((l) => (
                   <a
                     key={l}
-                    href={col.href}
+                    href={linkHref[l] ?? col.href}
                     className="ul mb-2 block w-fit text-[13.4px] text-paper/60 no-underline transition-colors duration-500 hover:text-paper"
                   >
                     {l}

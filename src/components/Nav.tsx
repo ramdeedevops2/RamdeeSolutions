@@ -2,6 +2,7 @@ import { Wordmark, ThemeToggle } from './Ui';
 import { useScrolled, useClock } from '../hooks/useMotion';
 
 const links = [
+  { href: '#about', label: 'About' },
   { href: '#services', label: 'Index' },
   { href: '#approach', label: 'Studio' },
   { href: '#work', label: 'Work' },

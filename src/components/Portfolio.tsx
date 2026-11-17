@@ -43,7 +43,7 @@ export default function Portfolio() {
       <div className="shell pt-[clamp(90px,14vh,190px)]">
         <div className="grid12 items-end gap-y-8 pb-[clamp(36px,6vh,72px)]">
           <div className="col-span-4 md:col-span-6">
-            <Index n="02" label="Selected work" />
+            <Index n="03" label="Selected work" />
             <h2 className="display mt-6 text-[clamp(36px,6.2vw,104px)]">
               Platforms in
               <br />

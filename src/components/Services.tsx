@@ -90,7 +90,7 @@ export default function Services() {
         {/* section head on the grid */}
         <div className="grid12 mb-[clamp(48px,8vh,110px)] items-end gap-y-8">
           <div className="col-span-4 md:col-span-5">
-            <Index n="01" label="Capabilities" />
+            <Index n="02" label="Capabilities" />
             <h2 className="display mt-6 text-[clamp(36px,6.2vw,104px)]">
               <Kinetic text="What we" />
               <Kinetic text="build" base={0.12} className="font-display italic text-accent" />

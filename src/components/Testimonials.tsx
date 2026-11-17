@@ -34,7 +34,7 @@ export default function Testimonials() {
       <div className="shell">
         <div className="grid12 items-start gap-y-10">
           <div className="col-span-4 md:col-span-3">
-            <Index n="04" label="Clients" />
+            <Index n="05" label="Clients" />
           </div>
 
           {/* the quote — large, editorial, swapped by index */}

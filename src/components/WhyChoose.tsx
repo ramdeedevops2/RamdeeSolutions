@@ -35,7 +35,7 @@ export default function WhyChoose() {
         <div className="grid12 items-start gap-y-[clamp(40px,7vh,80px)]">
           {/* statement + studio image */}
           <div className="col-span-4 md:col-span-5">
-            <Index n="03" label="The studio" />
+            <Index n="04" label="The studio" />
             <h2 className="display mt-6 text-[clamp(36px,6.2vw,104px)]">
               <Kinetic text="Built to be" />
               <Kinetic text="handed over" base={0.12} className="font-display italic text-accent" />

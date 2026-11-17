@@ -253,6 +253,22 @@
     }
   }
 
+  /* ---------- form fields ----------
+     Browsers paint autofilled inputs with their own pale background; mask it
+     with an inset shadow in the page colour so fields stay transparent-looking
+     in both themes. */
+  .field:-webkit-autofill,
+  .field:-webkit-autofill:hover,
+  .field:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgb(var(--c-paper));
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--c-ink)) inset;
+    caret-color: rgb(var(--c-paper));
+    transition: background-color 9999s ease-out 0s;
+  }
+  .field {
+    caret-color: rgb(var(--c-accent));
+  }
+
   /* ---------- link underline draw ---------- */
   .ul {
     position: relative;
